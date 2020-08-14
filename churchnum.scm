@@ -18,3 +18,24 @@
 (define lor (lambda (x) (lambda (y) ((x T) y))))
 (define lnot (lambda (x) ((x F) T)))
 (define prtbool (lambda (x) ((x 'T) 'F)))
+
+(define iszero-v1 (lambda (x) (((x F) lnot) F)))
+(define iszero-v2 (lambda (n) ((n (lambda (x) F)) T)))
+(alias zeroc? iszero-v1)
+
+;; just for example
+;; this is explain below
+;; (define cons (lambda (a) (lambda (b) (lambda (x) ((x a)b)))))
+;; (define car (lambda (x) (x T)))
+;; (define cdr (lambda (x) (x F)))
+;; (define Φ (lambda (p) ((cons (succ (car p))) (car p))))
+;; (define pred (lambda (n) (car ((n Φ) (lambda (z) ((z zero) zero))))))
+
+;; (define Φ (lambda (p) (lambda (z) ((z (succ (p T))) (p T)))))
+;; (define pred (lambda (n) (((n Φ) (lambda (z) ((z zero) zero))) F)))
+
+;; who can understand this?
+(define pred (lambda (n) (lambda (f) (lambda (x) (((n (lambda (g) (lambda (h) (h (g f))))) (lambda (u) x)) (lambda (u) u))))))
+
+(define greaterc? (lambda (x) (lambda (y) (zeroc? ((x pred) y)))))
+(define eqc? (lambda (x) (lambda (y) ((land ((greaterc? x) y)) ((greaterc? y) x)))))
