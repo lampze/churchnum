@@ -39,3 +39,19 @@
 
 (define greaterc? (lambda (x) (lambda (y) (zeroc? ((x pred) y)))))
 (define eqc? (lambda (x) (lambda (y) ((land ((greaterc? x) y)) ((greaterc? y) x)))))
+
+(define Y (lambda (f) (
+                  (lambda (x) (f (x x)))
+                  (lambda (x) (f (x x)))
+                  )
+             ))
+(define Z (lambda (f) (
+                  (lambda (x) (f (lambda (y) ((x x) y))))
+                  (lambda (x) (f (lambda (y) ((x x) y))))
+                  )
+             ))
+(define R (lambda (r) (lambda (n) (((zeroc? n) zero) ((n succ) (r (pred n)))))))
+(define FACT (lambda (f) (lambda (x) (((zeroc? x) one) ((mult x) (f (pred x)))))))
+(define fact (lambda (f) (lambda (x) (if (eq? x 0)
+                               1
+                               (* x (f (sub1 x))))))))

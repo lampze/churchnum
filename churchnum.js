@@ -13,3 +13,7 @@ let three = succ(two);
 let four = succ(three);
 let add1 = (n) => n + 1;
 let prt = (x) => x(add1)(0);
+
+let Y = (f) => ((x) => f(x(x)))((x) => f(x(x)));
+let Z = (f) => ((x) => f((y) => x(x)(y)))((x) => f((y) => x(x)(y)));
+let F = (f) => (x) => (x == 0 ? 1 : x * f(x - 1));
